@@ -1,0 +1,28 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:src="@drawable/ic_filter_list_white_24dp"
+    tools:context="com.example.maru.VisualSide.MainActivity">
+
+    <item
+        android:id="@+id/normalFILTR"
+        android:orderInCategory="100"
+        android:title="@string/normal"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/PlaceFILTR"
+        android:orderInCategory="100"
+        android:title="@string/Place"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/TimeFILTR"
+        android:orderInCategory="100"
+        android:title="@string/Time"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/PlaceAndTimeFILTR"
+        android:orderInCategory="100"
+        android:title="@string/PlaceAndTime"
+        app:showAsAction="never" />
+</menu>
