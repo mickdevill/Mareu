@@ -10,7 +10,8 @@ import androidx.fragment.app.DialogFragment;
 
 import java.util.Calendar;
 
-public class TimePikerFrag extends DialogFragment {
+//le timePicker qui est utilisé pour l'ajout
+public class TimePikerDialogVS extends DialogFragment {
 
     @NonNull
     @Override
@@ -18,6 +19,9 @@ public class TimePikerFrag extends DialogFragment {
         Calendar c = Calendar.getInstance();
         int heur = c.get(Calendar.HOUR_OF_DAY);
         int min = c.get(Calendar.MINUTE);
-        return new TimePickerDialog(getActivity(), (TimePickerDialog.OnTimeSetListener) getActivity(),heur, min, true);
+        return new TimePickerDialog(getActivity(), (TimePickerDialog.OnTimeSetListener) getActivity(), heur, min, true);
     }
+
+
 }
+

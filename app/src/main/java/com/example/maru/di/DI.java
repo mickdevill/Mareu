@@ -1,20 +1,20 @@
 package com.example.maru.di;
 
-import com.example.maru.model.reuService;
-import com.example.maru.model.reuServiceImplemented;
+import com.example.maru.model.ReuService;
+import com.example.maru.model.ReuServiceImplemented;
 
 
 public class DI {
+    //l'ingection des dépendance
+    private static ReuService service = new ReuServiceImplemented();
 
-    private static reuService service = new reuServiceImplemented();
 
-
-    public static reuService getService() {
+    public static ReuService getService() {
         return service;
     }
 
 
-    public static reuService getNewInstanceService() {
-        return new reuServiceImplemented();
+    public static ReuService getNewInstanceService() {
+        return new ReuServiceImplemented();
     }
 }

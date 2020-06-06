@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/rcvElement"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
-    >
+    android:layout_height="70dp">
 
-    <ImageView
+    <com.example.maru.customStaf.Circle
         android:id="@+id/reuPreview"
-        android:layout_width="50dp"
+        android:layout_width="60dp"
         android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="8dp"
+
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/reuMail"
-        android:layout_width="270dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:text="TextView"
         android:maxLines="1"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -27,14 +26,14 @@
 
     <TextView
         android:id="@+id/ReuSujetAndInfo"
-        android:layout_width="270dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="16dp"
         android:text="TextView"
         android:textColor="#313131"
-        android:textSize="18sp"
+        android:textSize="@dimen/textSizeForDescription"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/reuMail"
         app:layout_constraintStart_toEndOf="@+id/reuPreview"
@@ -50,7 +49,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_delete" />
+        app:srcCompat="@drawable/ic_delete"
+        android:background="@color/cardview_shadow_end_color" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,53 +1,57 @@
 package com.example.maru.VisualSide;
 
-import android.content.Intent;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
-
-import com.example.maru.R;
-import com.example.maru.model.laReunion;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.DatePicker;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.maru.R;
 import com.example.maru.di.DI;
+import com.example.maru.model.LaRéunion;
+import com.example.maru.model.ReuService;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Switch;
-import android.widget.Toast;
-
-import com.example.maru.model.reuService;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements filtreFragmentDialog.filtreListner{
+public class MainActivity extends AppCompatActivity implements FiltreFragmentDialog.filtreListner,
+        TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
 
-    private reuService service;
+    private static ReuService service;
 
-    //обект собрания который нужен для фильтрации
-laReunion reunion;
+    FloatingActionButton fab;
+    static RecyclerView reuList;
+    //la liste des réunions
+    static List<LaRéunion> listForAdapter;
 
-FloatingActionButton fab;
-    RecyclerView reuList;
-    //список для адаптера по дефолту и основной список
-    List<laReunion> listForAdapter;
-    //список для фильтрации!
-    List<laReunion>listForFiltr = Arrays.asList();
-//чтобы приложение выдовало коректный фильтр!
-int curentFilter;
-//числа для того чтобы фильтровать по времени!
+
+    //чтобы приложение выдовало коректный фильтр!
+    static int curentFilter;
+    //le fragment manager pour appeler de DialogFragment
+    public static FragmentManager mManager;
+    //for add new!!!
+    static int dayAdd;
+    static int monthAdd;
+    static int yearAdd;
+    static int hourAdd;
+    static int minutAdd;
+
+
+    public void callTheDialog(int curentFilter) {
+        // addNewReunion.start(this);
+        FiltreFragmentDialog.newInstance(curentFilter).show(getSupportFragmentManager(), "filterthat");
+    }
 
 
     @Override
@@ -56,7 +60,10 @@ int curentFilter;
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        mManager = getSupportFragmentManager();
         service = DI.getService();
+
 
         reuList = findViewById(R.id.rcvList);
         fab = findViewById(R.id.fab);
@@ -64,17 +71,13 @@ int curentFilter;
         LinearLayoutManager manager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         reuList.setLayoutManager(manager);
         reuList.addItemDecoration(new DividerItemDecoration(this, RecyclerView.VERTICAL));
-
-
-
+        curentFilter = 4;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addNewReunion.start(MainActivity.this);
+                callTheDialog(4);
             }
         });
-
-
     }
 
     @Override
@@ -89,80 +92,73 @@ int curentFilter;
 
 
         if (id == R.id.normalFILTR) {
-          initList();
-            Toast.makeText(this,"normal FILTR",Toast.LENGTH_SHORT).show();
+            listForAdapter = service.getAll();
+            reuList.setAdapter(new RcvAdapter(listForAdapter));
+
         }
 
-        if (id == R.id.PlaceFILTR){
-            Toast.makeText(this,"Place FILTR",Toast.LENGTH_SHORT).show();
-            curentFilter = 1;
-            filtreFragmentDialog.newInstance(curentFilter).show(getSupportFragmentManager(),"filterPlace");
+        if (id == R.id.PlaceFILTR) {
+            callTheDialog(1);
         }
-             if (id == R.id.TimeFILTR){
-                 Toast.makeText(this,"Time FILTR",Toast.LENGTH_SHORT).show();
-                curentFilter = 2;
-                 filtreFragmentDialog.newInstance(curentFilter).show(getSupportFragmentManager(),"filtertime");
-             }
-             if (id == R.id.PlaceAndTimeFILTR){
-                 Toast.makeText(this,"Place And Time FILTR",Toast.LENGTH_SHORT).show();
-                 curentFilter = 3;
-                 filtreFragmentDialog.newInstance(curentFilter).show(getSupportFragmentManager(),"PlaceAndTimeFILTR");
-             }
 
+        if (id == R.id.DateFILTR) {
+            callTheDialog(2);
+        }
 
+        if (id == R.id.TimeFILTR) {
+            callTheDialog(3);
+        }
 
-             return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);
     }
 
 
-
-    public void initList(){
+    public static void initList() {
         listForAdapter = service.getAll();
-      reuList.setAdapter(new rcvAdapter(listForAdapter));}
-
-
+        reuList.setAdapter(new RcvAdapter(listForAdapter));
+    }
 
 
     @Override
     protected void onResume() {
         super.onResume();
-    initList();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-    @Override
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
-
-    /**
-     * Fired if the user clicks on a delete button
-     * @param event
-     */
-    @Subscribe
-    public void onDeleteNeighbour(deliteReuEvent event) {
-        service.removeReu(event.reunion);
         initList();
     }
 
-    @Override
-    public void filterInfo(int roomNum, int year, int mouth, int day, int hour, int minut) {
-listForAdapter = service.getAll();
-       if (curentFilter == 1) {
-           listForFiltr = service.getAll();
-           service.filterP(reunion, roomNum, listForFiltr);
-           reuList.setAdapter(new rcvAdapter(listForFiltr));
-       }if (curentFilter == 2){
-            listForFiltr = service.getAll();
-         service.filterD(reunion,year,mouth,day,listForFiltr);
-            reuList.setAdapter(new rcvAdapter(listForFiltr));
-        }
 
-        // Toast.makeText(this,"le filtre passe la valeur " + roomNum,Toast.LENGTH_SHORT).show();
+    @Override
+    public void filterInfo(List<LaRéunion> reunionListff) {
+        reuList.setAdapter(new RcvAdapter(reunionListff));
     }
+
+    //l'ajout de la reunion qui se fait dans la MainActivity
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        hourAdd = hourOfDay;
+        minutAdd = minute;
+
+
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        yearAdd = year;
+        monthAdd = month;
+        dayAdd = dayOfMonth;
+    }
+
+
+    @Override
+    public void foraddnewinfo(int roomNum, String sujet, String membersMail) {
+        if (yearAdd < 0 || monthAdd < 0 || dayAdd < 0 || hourAdd < 0 || minutAdd < 0) {
+            Toast.makeText(this, "Il faut indiquer la date et le temps", Toast.LENGTH_LONG).show();
+
+        } else {
+            LaRéunion reunion = new LaRéunion(yearAdd, monthAdd, dayAdd, hourAdd, minutAdd, roomNum, sujet, membersMail);
+            service.addNew(reunion);
+            reuList.setAdapter(new RcvAdapter(listForAdapter));
+        }
+    }
+
+
 }

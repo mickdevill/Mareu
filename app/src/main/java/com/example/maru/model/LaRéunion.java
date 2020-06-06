@@ -5,8 +5,8 @@ import android.os.Parcelable;
 
 import java.util.Objects;
 
-
-public class laReunion implements Parcelable {
+//la classe de la réunion avec les outils permétant de agrandir le project
+public class LaRéunion implements Parcelable {
 
 
     //le gestion du temps
@@ -21,7 +21,7 @@ public class laReunion implements Parcelable {
     private int minut;
     //le sale
 
-    private int roomNum;
+    public int roomNum;
     //le sujet
 
     private String sujet;
@@ -29,7 +29,7 @@ public class laReunion implements Parcelable {
 
     private String membersMail;
 
-    public laReunion(int ané, int mois, int jour, int heur, int minut, int roomNum, String sujet, String membersMail) {
+    public LaRéunion(int ané, int mois, int jour, int heur, int minut, int roomNum, String sujet, String membersMail) {
         this.ané = ané;
         this.mois = mois;
         this.jour = jour;
@@ -41,7 +41,7 @@ public class laReunion implements Parcelable {
     }
 
 
-    protected laReunion(Parcel in) {
+    protected LaRéunion(Parcel in) {
 
         ané = in.readInt();
         mois = in.readInt();
@@ -57,8 +57,8 @@ public class laReunion implements Parcelable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof laReunion)) return false;
-        laReunion laReunion = (laReunion) o;
+        if (!(o instanceof LaRéunion)) return false;
+        LaRéunion laReunion = (LaRéunion) o;
         return ané == laReunion.ané &&
                 mois == laReunion.mois &&
                 jour == laReunion.jour &&
@@ -74,15 +74,15 @@ public class laReunion implements Parcelable {
         return Objects.hash(ané, mois, jour, heur, minut, roomNum, sujet, membersMail);
     }
 
-    public static final Creator<laReunion> CREATOR = new Creator<laReunion>() {
+    public static final Creator<LaRéunion> CREATOR = new Creator<LaRéunion>() {
         @Override
-        public laReunion createFromParcel(Parcel in) {
-            return new laReunion(in);
+        public LaRéunion createFromParcel(Parcel in) {
+            return new LaRéunion(in);
         }
 
         @Override
-        public laReunion[] newArray(int size) {
-            return new laReunion[size];
+        public LaRéunion[] newArray(int size) {
+            return new LaRéunion[size];
         }
     };
 
@@ -104,6 +104,7 @@ public class laReunion implements Parcelable {
         dest.writeString(membersMail);
     }
 
+    // les geteur est les seteur
     public int getAné() {
         return ané;
     }

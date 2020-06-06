@@ -4,24 +4,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.maru.R;
-import com.example.maru.model.laReunion;
-
-import org.greenrobot.eventbus.EventBus;
+import com.example.maru.model.LaRéunion;
 
 import java.util.List;
 
-public class rcvAdapter extends RecyclerView.Adapter<rcvAdapter.holder> {
 
-    List<laReunion> reuList;
+public class RcvAdapter extends RecyclerView.Adapter<RcvAdapter.holder> {
 
-    public rcvAdapter(List<laReunion> reuList) {
+    List<LaRéunion> reuList;
+
+    public RcvAdapter(List<LaRéunion> reuList) {
         this.reuList = reuList;
     }
 
@@ -34,16 +32,18 @@ public class rcvAdapter extends RecyclerView.Adapter<rcvAdapter.holder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull holder holder, int position) {
-        final laReunion reunion = reuList.get(position);
-        holder.sujet.setText(reunion.getSujet() + " - " + reunion.getHeur() + ":" + reunion.getMinut() + " - " + reunion.getJour() +
-                "/" + reunion.getMois() + "/" + reunion.getAné() + " - " + "sale n°"+ reunion.getRoomNum() );
+    public void onBindViewHolder(@NonNull final holder holder, int position) {
+        final LaRéunion reunion = reuList.get(position);
+
+        holder.sujet.setText(reunion.getSujet() + " - " + minutsAndHours(reunion.getHeur()) + ":" + minutsAndHours(reunion.getMinut()) + " - " + reunion.getJour() +
+                "/" + coolMonth(reunion.getMois()) + "/" + reunion.getAné() + " - " + "salle n°" + reunion.getRoomNum());
         holder.members.setText(reunion.getMembersMail());
 
         holder.deliteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EventBus.getDefault().post(new deliteReuEvent(reunion));
+                reuList.remove(reunion);
+                MainActivity.initList();
             }
         });
     }
@@ -54,7 +54,7 @@ public class rcvAdapter extends RecyclerView.Adapter<rcvAdapter.holder> {
     }
 
     public class holder extends RecyclerView.ViewHolder {
-        ImageView preview;
+        com.example.maru.customStaf.Circle preview;
         TextView sujet;
         TextView members;
         ImageButton deliteBtn;
@@ -68,6 +68,16 @@ public class rcvAdapter extends RecyclerView.Adapter<rcvAdapter.holder> {
 
 
         }
+    }
+
+    //pour le bon affichaage de l'heure
+    private String minutsAndHours(int time) {
+        return time <= 9 ? "0" + time : String.valueOf(time);
+    }
+
+    //pour le bon affichage du mois
+    private int coolMonth(int month) {
+        return month += 1;
     }
 
 }
