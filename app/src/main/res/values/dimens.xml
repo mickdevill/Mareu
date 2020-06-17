@@ -1,14 +1,17 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="imageviewAdd">350dp</dimen>
-    <dimen name="contenerAddNew">130dp</dimen>
+
     <dimen name="textSide">25dp</dimen>
+
     <dimen name="textTop">70dp</dimen>
+
     <dimen name="cardViewTop">100dp</dimen>
-    <dimen name="roomnumidadd">190dp</dimen>
+
+    <dimen name="spinerMarStart">50dp</dimen>
+
     <dimen name="textInputLayoutForMembers">10dp</dimen>
 
-    <dimen name="textSizeForDescription">14sp</dimen>
+    <dimen name="textSizeForDescription">16sp</dimen>
 
 
 </resources>

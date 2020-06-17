@@ -13,7 +13,7 @@ import java.util.Random;
 
 
 public class Circle extends View {
-    //la class crée uniquement pour le petit cercle qui change la coumeur
+    //the class used for create custom view of random color circle
     private Paint mPaint;
     Random random = new Random();
 

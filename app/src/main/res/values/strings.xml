@@ -1,18 +1,39 @@
 <resources>
     <string name="app_name">Maréu</string>
     <string name="action_settings">Settings</string>
-    <string name="maill_s_des_membre_s_de_la_r_union">mails des membres de la réunion</string>
-    <string name="sujet_de_la_reunion">Sujet de la réunion</string>
 
-    <string name="room_num">numéro de la salle inférieur a 10</string>
-    <string name="sale_n">salle n°</string>
+    <string name="members_mails">mails of members</string>
+    <string name="sujet">about meetup </string>
+    <string name="save">SAVE</string>
+    <string name="Add_error">please fill in all fields </string>
 
 
-    <string name="filtrer_par_la_place"><![CDATA[Filtrer par la place ->]]></string>
-    <string name="filtrer_par_la_date"><![CDATA[Filtrer par la date ->]]></string>
-    <string name="filtrer_par_le_temps"><![CDATA[Filtrer par le temps ->]]></string>
-    <string name="annuler_les_filtres"><![CDATA[annuler les filtres ->]]></string>
+    <string-array name="room">
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+        <item>E</item>
+        <item>F</item>
+        <item>G</item>
+        <item>H</item>
+        <item>I</item>
+        <item>J</item>
+    </string-array>
 
+    <string name="filter_by_place"><![CDATA[filter by place ->]]></string>
+    <string name="filter_by_date"><![CDATA[filter by date ->]]></string>
+    <string name="filter_by_time"><![CDATA[filter by time ->]]></string>
+    <string name="call_off_filters"><![CDATA[call off filters ->]]></string>
+
+<string name="negative_button">Cancel</string>
+<string name="positive_button">Filter</string>
+
+
+
+    <string name="remouveDialog">Are you sure you want remove this meetup from list!?</string>
+    <string name="tittleRemouve"> </string>
+<string name="remouveIt">remove</string>
 
 </resources>
 
